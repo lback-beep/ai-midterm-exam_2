@@ -1,63 +1,266 @@
-# 銘傳大學《人工智慧概論》期中線上考試系統 (GitHub Pages 部署與考題指南)
-
-本指南提供一套專為 **GitHub Pages** 免費靜態託管設計的線上期中考題與批改系統設計。本系統依據來源文件 **《(網路出題)2026.11(上)公事系人工智慧概論(期中)試題.docx》** 的完整內容建置，收錄全部 20 道單選考題與標準解答（每題 5 分，滿分 100 分）。
+從 Studio 下載的 `.md` 檔案無法在 GitHub Pages 運作的原因，是因為 **`.md`（Markdown）是說明文件格式**，而 GitHub Pages **需要名為 `index.html` 的 HTML 網頁主檔案** 才能呈現互動式的答題與自動批改功能。若直接上傳 `.md` 檔，GitHub Pages 會無法載入網頁互動邏輯，進而顯示 404 錯誤或純文字內容。
 
 ---
 
-## 一、 系統架構與雙視角設計
+### 修正與發布步驟（只需 3 分鐘）
 
-本系統採單頁式網頁應用程式 (Single-Page Application) 架構，無需後端伺服器即可於 GitHub Pages 上發布：
+1. **新建 `index.html` 檔案**：
+   - 進入您的 GitHub Repository（儲存庫）。
+   - 點選右上角的 **Add file** ➔ **Create new file**。
+   - 在檔名欄位輸入 **`index.html`**。
 
-1. **學生端視角 (Student View)**
-   - **題目展示**：學生開啟網頁後，僅能閱讀 20 道題目與選項，無法預覽解答與分數。
-   - **身份輸入**：學生需輸入「學號」與「姓名」後始可開始作答。
-   - **送出機制**：作答完畢點擊「送出考卷」，系統自動產生「答題憑證代碼」，學生可複製傳送給教師登記。
+2. **貼入完整網頁程式碼**：
+   - 複製下方提供包含 20 道《人工智慧概論》期中考題 與「學生作答 / 教師批改」雙視角的 HTML 程式碼，貼入編輯器中。
+   - 點選右上方綠色的 **Commit changes** 儲存檔案。
 
-2. **教師端視角與批改功能 (Teacher View)**
-   - **模式切換**：點擊切換至教師批改介面。
-   - **自動批改**：教師貼上學生送出的答題代碼，系統自動比對內建標準答案鍵，計算總分（滿分 100 分）。
-   - **成績明細**：呈現學生學號、姓名、總得分與答對題數明細。
-
----
-
-## 二、 考題內容與標準答案鍵 (全 20 題)
-
-依據考題文件，20 道考題解答如下：
-
-| 題號 | 題目關鍵字 | 標準答案 |
-| :---: | :--- | :---: |
-| **1** | 人工智慧（AI）定義 | **B** |
-| **2** | 智慧包含理解情境與適應變化 | **A** |
-| **3** | 天生條件與後天經驗交互作用 | **C** |
-| **4** | 記憶三步驟（編碼、儲存、提取） | **B** |
-| **5** | 考試想起內容屬「提取」 | **C** |
-| **6** | 神經可塑性 | **B** |
-| **7** | 機器學習辨識貓狗 | **A** |
-| **8** | AI 不是魔法（來自資料與演算法） | **B** |
-| **9** | 亞里士多德（三段論與邏輯推理） | **B** |
-| **10** | 安提基特拉儀（古代天文計算機） | **B** |
-| **11** | 艾倫・圖靈（機器能思考嗎） | **A** |
-| **12** | 圖靈測試（對話像人類） | **B** |
-| **13** | 達特茅斯會議 (1956年) | **A** |
-| **14** | 傳統規則式 AI | **B** |
-| **15** | AI 包含 機器學習 包含 深度學習 | **C** |
-| **16** | 機器學習從資料中學習規律 | **B** |
-| **17** | 深度學習（多層神經網路） | **A** |
-| **18** | 生成式 AI（產生新內容） | **C** |
-| **19** | 自然語言處理 NLP（翻譯與摘要） | **B** |
-| **20** | 電腦視覺（人臉辨識） | **B** |
+3. **啟用 GitHub Pages**：
+   - 進入 Repository 的 **Settings** ➔ **Pages**。
+   - 在 **Build and deployment** 下方的 Branch 選擇 **`main`**（或 `master`），資料夾選 **`/ (root)`**，點擊 **Save**。
+   - 等待約 1 分鐘重新整理頁面，即可取得全班專屬的線上考試網址！
 
 ---
 
-## 三、 GitHub Pages 部署步驟教學
+### `index.html` 完整程式碼（請直接複製）：
 
-1. **建立 GitHub Repository**
-   - 於 GitHub 新建一個名稱為 `ai-exam` 的公開 Repository (Public)。
+```html
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>銘傳大學 115學年度人工智慧概論 期中線上考試系統</title>
+    <style>
+        :root { --primary: #2563eb; --bg: #f8fafc; --card: #ffffff; --text: #1e293b; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 20px; }
+        .container { max-width: 800px; margin: 0 auto; background: var(--card); padding: 30px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+        h1 { text-align: center; color: #1e3a8a; margin-bottom: 8px; }
+        .subtitle { text-align: center; color: #64748b; font-weight: bold; margin-bottom: 24px; }
+        .nav-buttons { display: flex; justify-content: flex-end; margin-bottom: 20px; }
+        .btn { background: var(--primary); color: white; border: none; padding: 10px 18px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 14px; }
+        .btn:hover { opacity: 0.9; }
+        .btn-secondary { background: #64748b; }
+        .student-info { background: #eff6ff; padding: 16px; border-radius: 8px; margin-bottom: 24px; border: 1px solid #bfdbfe; }
+        .form-group { margin-bottom: 12px; }
+        .form-group label { display: block; font-weight: 600; margin-bottom: 4px; }
+        .form-group input { width: 100%; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box; }
+        .question-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; margin-bottom: 16px; }
+        .question-title { font-weight: bold; margin-bottom: 12px; color: #0f172a; }
+        .options { display: flex; flex-direction: column; gap: 8px; }
+        .option-label { display: flex; align-items: center; gap: 8px; cursor: pointer; padding: 6px 10px; border-radius: 4px; transition: background 0.2s; }
+        .option-label:hover { background: #f1f5f9; }
+        .hidden { display: none; }
+        .code-box { background: #0f172a; color: #38bdf8; padding: 16px; border-radius: 8px; font-family: monospace; word-break: break-all; margin-top: 12px; }
+        .teacher-panel { background: #f0fdf4; border: 1px solid #bbf7d0; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
+        .result-item { padding: 10px 0; border-bottom: 1px solid #e2e8f0; }
+        .correct { color: #16a34a; font-weight: bold; }
+        .incorrect { color: #dc2626; font-weight: bold; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="nav-buttons">
+        <button id="toggleModeBtn" class="btn btn-secondary" onclick="toggleMode()">切換至教師批改模式</button>
+    </div>
+    
+    <!-- 學生作答視角 -->
+    <div id="studentView">
+        <h1>銘傳大學 115學年度人工智慧概論</h1>
+        <div class="subtitle">期中線上測驗（全20題，每題5分，滿分100分）</div>
+        
+        <div class="student-info">
+            <div class="form-group">
+                <label for="studentId">學號：</label>
+                <input type="text" id="studentId" placeholder="請輸入學號 (例：1120001)">
+            </div>
+            <div class="form-group">
+                <label for="studentName">姓名：</label>
+                <input type="text" id="studentName" placeholder="請輸入姓名">
+            </div>
+        </div>
+        
+        <form id="quizForm">
+            <div id="questionsContainer"></div>
+            <button type="button" class="btn" onclick="submitExam()" style="width:100%; padding:14px; font-size:16px; margin-top:20px;">送出考卷並產生答題代碼</button>
+        </form>
 
-2. **上傳網頁主檔**
-   - 將包含題目與自動批改邏輯的 `index.html` 網頁檔上傳至主目錄。
+        <div id="submitResult" class="hidden" style="margin-top:24px; background:#f8fafc; border:2px dashed #94a3b8; padding:20px; border-radius:8px;">
+            <h3 style="color:#16a34a; margin-top:0;">✅ 考卷已成功送出！</h3>
+            <p>請複製下方產生的<b>「答題憑證代碼」</b>傳送給任課教師進行成績批改：</p>
+            <div id="submissionCode" class="code-box"></div>
+            <button class="btn" onclick="copyCode()" style="margin-top:12px;">複製答題憑證代碼</button>
+        </div>
+    </div>
 
-3. **開啟 GitHub Pages 發布**
-   - 點選 **Settings** -> **Pages**，將 Branch 設為 `main` 分支並儲存。
-   - 發布後即可取得學生在線作答的專屬網址。
+    <!-- 教師批改視角 -->
+    <div id="teacherView" class="hidden">
+        <h1>教師自動批改系統</h1>
+        <div class="subtitle">人工智慧概論 期中測驗成績比對</div>
+        
+        <div class="teacher-panel">
+            <label for="inputCode" style="font-weight:bold; display:block; margin-bottom:8px;">貼上學生的「答題憑證代碼」：</label>
+            <textarea id="inputCode" rows="4" style="width:100%; border:1px solid #cbd5e1; border-radius:6px; padding:8px; font-family:monospace;" placeholder="在此處貼上學生送出的代碼..."></textarea>
+            <button class="btn" onclick="gradeExam()" style="margin-top:12px; background:#16a34a;">進行自動批改與計分</button>
+        </div>
 
+        <div id="gradeResult" class="hidden"></div>
+    </div>
+</div>
+
+<script>
+// 試題庫與答案鍵（引用自考題內容）
+const quizData = [
+    { id: 1, q: "下列何者最適合描述人工智慧（AI）？", options: ["A. 只要會寫程式，就是AI", "B. 讓機器表現出類似人類智慧能力的技術", "C. 專門用來取代人類工作的機器人", "D. 只能用於科學研究的高階電腦系統"], ans: "B" },
+    { id: 2, q: "本章提到，智慧不只是會背書或計算，還包括下列何者？", options: ["A. 理解情境、做出選擇、適應變化", "B. 永遠不犯錯", "C. 只靠天生能力，不受後天影響", "D. 能夠記住所有資料"], ans: "A" },
+    { id: 3, q: "關於人類智慧的形成，下列敘述何者較正確？", options: ["A. 智慧完全由基因決定", "B. 智慧完全由考試成績決定", "C. 智慧通常是天生條件與後天經驗交互作用的結果", "D. 智慧只和記憶力有關"], ans: "C" },
+    { id: 4, q: "記憶的三個主要步驟通常包括下列何者？", options: ["A. 輸入、列印、刪除", "B. 編碼、儲存、提取", "C. 感覺、情緒、想像", "D. 搜尋、下載、上傳"], ans: "B" },
+    { id: 5, q: "「考試時想起讀過的內容」比較接近記憶歷程中的哪一個步驟？", options: ["A. 編碼", "B. 儲存", "C. 提取", "D. 遺忘"], ans: "C" },
+    { id: 6, q: "「神經可塑性」主要是指什麼？", options: ["A. 大腦完全不會改變", "B. 大腦會因學習與經驗而調整連結", "C. AI 模型只能使用固定規則", "D. 電腦硬體可以自動升級"], ans: "B" },
+    { id: 7, q: "若要訓練 AI 分辨貓和狗，通常需要提供大量貓狗圖片讓 AI 學習特徵。這最接近下列哪一概念？", options: ["A. 機器學習", "B. 規則刪除", "C. 隨機猜測", "D. 手動排序"], ans: "A" },
+    { id: 8, q: "下列哪一項最能說明「AI 不是魔法」？", options: ["A. AI 可以在沒有資料與演算法的情況下自動產生智慧", "B. AI 的能力來自資料、演算法、模型與運算能力", "C. AI 一定比人類正確", "D. AI 能完全理解人類情感"], ans: "B" },
+    { id: 9, q: "亞里士多德對 AI 發展史的意義，主要可連結到下列哪一觀念？", options: ["A. 生成圖片", "B. 三段論與邏輯推理", "C. 雲端運算", "D. 社群媒體推薦"], ans: "B" },
+    { id: 10, q: "安提基特拉儀常被稱為古代的「天文計算機」，它在本章中的意義是什麼？", options: ["A. 證明古代已有現代AI", "B. 展現人類很早就嘗試用機械處理複雜資訊", "C. 是第一個聊天機器人", "D. 是第一個深度學習模型"], ans: "B" },
+    { id: 11, q: "「機器能思考嗎？」這個經典問題與哪位人物最相關？", options: ["A. 艾倫・圖靈", "B. 亞里士多德", "C. 特斯拉", "D. 艾西莫夫"], ans: "A" },
+    { id: 12, q: "圖靈測試主要想討論的是什麼？", options: ["A. 電腦硬體速度是否夠快", "B. 機器在對話中是否能表現得像人類", "C. AI 是否能畫出漂亮圖片", "D. AI 是否能儲存最多資料"], ans: "B" },
+    { id: 13, q: "1956 年的達特茅斯會議在 AI 發展史上的重要性是什麼？", options: ["A. 被視為人工智慧正式成為研究領域的重要起點", "B. 發明第一台智慧手機", "C. 發明網際網路", "D. 首次提出自動駕駛分級"], ans: "A" },
+    { id: 14, q: "下列何者最能描述「傳統規則式 AI」？", options: ["A. 透過大量資料自行學習所有規律", "B. 依照人類事先寫好的規則進行判斷", "C. 只能產生圖片", "D. 完全不需要人類設計"], ans: "B" },
+    { id: 15, q: "下列關係何者正確？", options: ["A. 生成式AI 包含所有AI", "B. 深度學習包含人工智慧", "C. 人工智慧包含機器學習，機器學習包含深度學習", "D. ChatGPT 等於全部人工智慧"], ans: "C" },
+    { id: 16, q: "機器學習與傳統規則式 AI 最大的差異是什麼？", options: ["A. 機器學習完全不需要資料", "B. 機器學習讓系統從資料中學習規律", "C. 傳統規則式AI 一定比機器學習先進", "D. 機器學習只能用來翻譯"], ans: "B" },
+    { id: 17, q: "深度學習主要使用下列哪一種方法處理複雜資料？", options: ["A. 多層神經網路", "B. 人工手寫規則表", "C. 紙本資料庫", "D. 手動問卷統計"], ans: "A" },
+    { id: 18, q: "生成式 AI 最主要的特色是什麼？", options: ["A. 只能辨識車牌", "B. 只能進行數字加減", "C. 可以產生文字、圖片、聲音、影片或程式碼等新內容", "D. 只能依照固定規則分類"], ans: "C" },
+    { id: 19, q: "下列哪一項是自然語言處理（NLP）的應用？", options: ["A. 車牌辨識", "B. 自動翻譯與文章摘要", "C. 工廠機械手臂焊接", "D. 天氣雷達影像偵測"], ans: "B" },
+    { id: 20, q: "下列哪一項是電腦視覺（Computer Vision）的應用？", options: ["A. 語音聊天", "B. 人臉辨識", "C. 文章摘要", "D. 自動產生詩詞"], ans: "B" }
+];
+
+let isTeacherMode = false;
+
+function renderQuestions() {
+    const container = document.getElementById("questionsContainer");
+    container.innerHTML = quizData.map(item => `
+        <div class="question-card">
+            <div class="question-title">${item.id}. ${item.q}</div>
+            <div class="options">
+                ${item.options.map(opt => {
+                    const optKey = opt.substring(0, 1);
+                    return `
+                        <label class="option-label">
+                            <input type="radio" name="q_${item.id}" value="${optKey}">
+                            <span>${opt}</span>
+                        </label>
+                    `;
+                }).join('')}
+            </div>
+        </div>
+    `).join('');
+}
+
+function submitExam() {
+    const id = document.getElementById("studentId").value.trim();
+    const name = document.getElementById("studentName").value.trim();
+    if (!id || !name) {
+        alert("請輸入學號與姓名！");
+        return;
+    }
+    
+    const answers = {};
+    let unansweredCount = 0;
+    quizData.forEach(item => {
+        const selected = document.querySelector(`input[name="q_${item.id}"]:checked`);
+        if (selected) {
+            answers[item.id] = selected.value;
+        } else {
+            unansweredCount++;
+        }
+    });
+
+    if (unansweredCount > 0) {
+        if (!confirm(`您還有 ${unansweredCount} 題未作答，確定要送出嗎？`)) return;
+    }
+
+    const payload = { id, name, answers, time: new Date().toLocaleString('zh-TW') };
+    const code = btoa(encodeURIComponent(JSON.stringify(payload)));
+    
+    document.getElementById("submissionCode").innerText = code;
+    document.getElementById("submitResult").classList.remove("hidden");
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+}
+
+function copyCode() {
+    const code = document.getElementById("submissionCode").innerText;
+    navigator.clipboard.writeText(code).then(() => {
+        alert("代碼已複製到剪貼簿！請將此代碼發送給教師。");
+    });
+}
+
+function toggleMode() {
+    isTeacherMode = !isTeacherMode;
+    const studentView = document.getElementById("studentView");
+    const teacherView = document.getElementById("teacherView");
+    const btn = document.getElementById("toggleModeBtn");
+
+    if (isTeacherMode) {
+        studentView.classList.add("hidden");
+        teacherView.classList.remove("hidden");
+        btn.innerText = "切換至學生作答模式";
+    } else {
+        teacherView.classList.add("hidden");
+        studentView.classList.remove("hidden");
+        btn.innerText = "切換至教師批改模式";
+    }
+}
+
+function gradeExam() {
+    const code = document.getElementById("inputCode").value.trim();
+    if (!code) {
+        alert("請輸入憑證代碼！");
+        return;
+    }
+
+    try {
+        const jsonStr = decodeURIComponent(atob(code));
+        const data = JSON.parse(jsonStr);
+        
+        let score = 0;
+        let detailsHtml = "";
+
+        quizData.forEach(item => {
+            const studentAns = data.answers[item.id] || "未作答";
+            const isCorrect = studentAns === item.ans;
+            if (isCorrect) score += 5;
+
+            detailsHtml += `
+                <div class="result-item">
+                    <b>第 ${item.id} 題：</b> ${item.q}<br>
+                    學生答案：<span class="${isCorrect ? 'correct' : 'incorrect'}">${studentAns}</span> ｜ 
+                    標準答案：<b class="correct">${item.ans}</b> 
+                    ${isCorrect ? '✅ (5分)' : '❌ (0分)'}
+                </div>
+            `;
+        });
+
+        const resultContainer = document.getElementById("gradeResult");
+        resultContainer.innerHTML = `
+            <div style="background:#fff; border:1px solid #cbd5e1; border-radius:8px; padding:20px; margin-top:20px;">
+                <h2 style="color:#1e3a8a; margin-top:0;">批改結果總覽</h2>
+                <p><b>學號：</b> ${data.id} ｜ <b>姓名：</b> ${data.name}</p>
+                <p><b>繳交時間：</b> ${data.time}</p>
+                <h3 style="color:#2563eb;">總得分： <span style="font-size:32px; color:#16a34a;">${score}</span> / 100 分</h3>
+                <hr>
+                <h4>對照明細：</h4>
+                ${detailsHtml}
+            </div>
+        `;
+        resultContainer.classList.remove("hidden");
+    } catch (e) {
+        alert("憑證代碼格式不正確，請確認代碼是否複製完整！");
+    }
+}
+
+renderQuestions();
+</script>
+</body>
+</html>
+```
+
+---
+
+複製這段 HTML 並命名為 `index.html` 上傳到 GitHub 後，網頁即可全功能運作。若在發布步驟上有遇到特定錯誤畫面（如 404 或網址未更新），可以隨時告訴我！
