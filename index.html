@@ -13,7 +13,7 @@
         .nav-buttons { display: flex; justify-content: flex-end; margin-bottom: 20px; }
         .btn { background: var(--primary); color: white; border: none; padding: 10px 18px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 14px; }
         .btn:hover { opacity: 0.9; }
-        .btn-secondary { background: #64748b; }
+        .btn-secondary { background: #475569; }
         .student-info { background: #eff6ff; padding: 16px; border-radius: 8px; margin-bottom: 24px; border: 1px solid #bfdbfe; }
         .form-group { margin-bottom: 12px; }
         .form-group label { display: block; font-weight: 600; margin-bottom: 4px; }
@@ -34,7 +34,7 @@
 <body>
 <div class="container">
     <div class="nav-buttons">
-        <button id="toggleModeBtn" class="btn btn-secondary" onclick="toggleMode()">切換至教師批改模式</button>
+        <button id="toggleModeBtn" class="btn btn-secondary" onclick="toggleMode()">🔒 切換至教師批改模式</button>
     </div>
     
     <!-- 學生作答視角 -->
@@ -68,7 +68,7 @@
 
     <!-- 教師批改視角 -->
     <div id="teacherView" class="hidden">
-        <h1>教師自動批改系統</h1>
+        <h1>教師自動批改系統 🔒</h1>
         <div class="subtitle">人工智慧概論 期中測驗成績比對</div>
         
         <div class="teacher-panel">
@@ -82,7 +82,10 @@
 </div>
 
 <script>
-// 試題庫與答案鍵（引用自考題內容）
+// 🔑 教師權限密碼（可在此自由更換）
+const TEACHER_PASSWORD = "teacher123";
+
+// 試題庫與標準答案
 const quizData = [
     { id: 1, q: "下列何者最適合描述人工智慧（AI）？", options: ["A. 只要會寫程式，就是AI", "B. 讓機器表現出類似人類智慧能力的技術", "C. 專門用來取代人類工作的機器人", "D. 只能用於科學研究的高階電腦系統"], ans: "B" },
     { id: 2, q: "本章提到，智慧不只是會背書或計算，還包括下列何者？", options: ["A. 理解情境、做出選擇、適應變化", "B. 永遠不犯錯", "C. 只靠天生能力，不受後天影響", "D. 能夠記住所有資料"], ans: "A" },
@@ -132,7 +135,7 @@ function submitExam() {
     const id = document.getElementById("studentId").value.trim();
     const name = document.getElementById("studentName").value.trim();
     if (!id || !name) {
-        alert("請輸入學號與姓名！");
+        alert("請先輸入學號與姓名！");
         return;
     }
     
@@ -162,11 +165,19 @@ function submitExam() {
 function copyCode() {
     const code = document.getElementById("submissionCode").innerText;
     navigator.clipboard.writeText(code).then(() => {
-        alert("代碼已複製到剪貼簿！請將此代碼發送給教師。");
+        alert("答題憑證代碼已複製到剪貼簿！請傳送給任課教師。");
     });
 }
 
 function toggleMode() {
+    if (!isTeacherMode) {
+        const pass = prompt("🔐 請輸入教師批改密碼：");
+        if (pass !== TEACHER_PASSWORD) {
+            if (pass !== null) alert("密碼錯誤！無法進入教師批改模式。");
+            return;
+        }
+    }
+
     isTeacherMode = !isTeacherMode;
     const studentView = document.getElementById("studentView");
     const teacherView = document.getElementById("teacherView");
@@ -175,18 +186,18 @@ function toggleMode() {
     if (isTeacherMode) {
         studentView.classList.add("hidden");
         teacherView.classList.remove("hidden");
-        btn.innerText = "切換至學生作答模式";
+        btn.innerText = "切換回學生作答模式";
     } else {
         teacherView.classList.add("hidden");
         studentView.classList.remove("hidden");
-        btn.innerText = "切換至教師批改模式";
+        btn.innerText = "🔒 切換至教師批改模式";
     }
 }
 
 function gradeExam() {
     const code = document.getElementById("inputCode").value.trim();
     if (!code) {
-        alert("請輸入憑證代碼！");
+        alert("請貼上學生的答題憑證代碼！");
         return;
     }
 
@@ -226,7 +237,7 @@ function gradeExam() {
         `;
         resultContainer.classList.remove("hidden");
     } catch (e) {
-        alert("憑證代碼格式不正確，請確認代碼是否複製完整！");
+        alert("無效的憑證代碼！請確認是否有完整複製。");
     }
 }
 
